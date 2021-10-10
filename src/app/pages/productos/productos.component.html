@@ -1,0 +1,104 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 426px;
+ background-image: url(assets/imagenes/background.jpg); background-size: cover; background-position: center top;">
+  <span class="mask bg-gradient-danger opacity-6"></span>
+</div>
+<div class="container-fluid padding-container-fluid" style="margin-top: -20rem !important;">
+  <div class="card-body align-items-end justify-content-end">
+    <p-table #tt [columns]="selectedColumns" [value]="productos" [paginator]="true" [rows]="size" [lazy]="true"
+             (onLazyLoad)="loadRecordsLazy($event)" [scrollable]="true"
+             [resizableColumns]="true" [loading]="false" [totalRecords]="totalRecords"
+             [style]="{width:'100%'}">
+      <ng-template pTemplate="caption">
+        <div class="p-grid">
+          <div class="p-col-3 align-items-end row margin-button">
+            <button pButton class="button-font-size"
+                    label="Crear" (click)="crearProducto()">
+            </button>
+            <button pButton class="button-font-size" icon="pi pi-refresh"
+                    title="Refrescar" style="margin-left: 5px"
+                    (click)="limpiarYConsultar()">
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [ngStyle]="{'width': col.width }">
+          <col style="width: 110px">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Costo
+          </th>
+          <th>
+            Observacion
+          </th>
+          <th>
+            Disponible
+          </th>
+          <th>
+            Acciones
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+          <td class="text-truncate" title=" {{ rowData.nombre }}">
+            {{ rowData.nombre }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.costo }}">
+            {{ rowData.costo }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.observacion }}">
+            {{ rowData.observacion }}
+          </td>
+          <td class="text-truncate" title="{{ rowData.disponible }}">
+            {{ rowData.disponible }}
+          </td>
+          <td class="text-truncate">
+            <div class="row">
+              <div class="icon-properties">
+                <i class="fas fa-edit fa-2x cursor-pointer"
+                   title="Editar cliente"
+                   (click)="editarProducto(rowData)"></i>
+              </div>
+              <div class="icon-properties">
+                <i class="fas fa-trash-alt fa-2x cursor-pointer"
+                   title="Eliminar cliente"
+                   (click)="confirmarEliminar($event, rowData)"></i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="5" class="text-center">
+            <span><strong>No hay datos para mostrar</strong></span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-dialog appendTo="body" [header]="esNuevo ? 'Crear Producto' : 'Actualizar Producto'"
+          *ngIf="habilitarVentana" [(visible)]="habilitarVentana" [responsive]="true"
+          [modal]="true" [contentStyle]="{'max-height':'500px', 'overflow':'visible', 'width': '500px'}"
+          [transitionOptions]="'400ms'" [closable]="true">
+  <app-producto-detalle #component [esNuevo]="esNuevo" [idAdmin]="idAdmin"
+  (recargarDatos)="cerrarVentana($event)"></app-producto-detalle>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button class="button-font-size" pButton (click)="component.crearProducto()"
+              label="{{esNuevo ? 'Crear' : 'Actualizar'}}"
+              [disabled]="false"></button>
+      <button class="button-font-size" pButton (click)="cerrarVentana()"
+              label="Cancelar"></button>
+    </div>
+  </p-footer>
+</p-dialog>

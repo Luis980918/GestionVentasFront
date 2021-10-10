@@ -1,0 +1,39 @@
+<form [formGroup]="form" autocomplete="off">
+  <div class="p-grid">
+    <div class="p-col-4 div-center">
+      <label>Nombre<span style="color: red">*&nbsp;</span>:</label>
+    </div>
+    <div class="p-col-8">
+      <input pInputText type="text" formControlName="nombre" maxlength="100" style="width: 100%;"
+             placeholder="Ingrese el nombre"/>
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col-4 div-center">
+      <label>Nombre corto:</label>
+    </div>
+    <div class="p-col-8">
+      <input pInputText type="text" formControlName="nombreCorto" maxlength="5" style="width: 100%;"
+             placeholder="Ingrese el nombre"/>
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col-4 div-center">
+      <label>Departamento<span style="color: red">*&nbsp;</span>:</label>
+    </div>
+    <div class="p-col-8">
+      <p-dropdown [options]="departamentos" formControlName="departamento" filter="true"
+                  placeholder="Seleccione el departamento" optionLabel="nombre"
+                  [style]="{'width':'100%'}"></p-dropdown>
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col-4 div-center">
+      <label>Habilitado:</label>
+    </div>
+    <div class="p-col-8">
+      <p-checkbox formControlName="habilitado" binary="true"></p-checkbox>
+    </div>
+  </div>
+</form>
+

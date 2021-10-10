@@ -1,0 +1,125 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 426px;
+ background-image: url(assets/imagenes/background.jpg); background-size: cover; background-position: center top;">
+  <span class="mask bg-gradient-danger opacity-6"></span>
+</div>
+<div class="container-fluid padding-container-fluid" style="margin-top: -20rem !important;">
+  <div class="card-body align-items-end justify-content-end">
+    <p-table #tt [columns]="selectedColumns" [value]="clientes" [paginator]="true" [rows]="size" [lazy]="true"
+             [rowsPerPageOptions]="[size,50,100]" (onLazyLoad)="loadRecordsLazy($event)" [scrollable]="true"
+             [resizableColumns]="true" [loading]="false" [totalRecords]="totalRecords" [first]="first"
+             [style]="{width:'100%'}">
+      <ng-template pTemplate="caption">
+        <div class="p-grid">
+          <div class="p-col-3">
+            <label class="label-font-size">Nombre</label>
+            <input class="p-inputtext-font-fize" type="text"
+                   maxLength="150" [(ngModel)]="nombre"
+                   (keyup.enter)="consultarClientes()"
+                   placeholder="Ingrese el nombre"
+                   pInputText>
+          </div>
+          <div class="p-col-3">
+            <label class="label-font-size">Correo</label>
+            <input class="p-inputtext-font-fize" type="text"
+                   maxLength="150" [(ngModel)]="correo"
+                   (keyup.enter)="consultarClientes()"
+                   placeholder="Ingrese el correo"
+                   pInputText>
+          </div>
+          <div class="p-col-3 align-items-end row margin-button">
+            <button pButton class="button-font-size"
+                    label="Crear" (click)="crearCliente()">
+            </button>
+            <button pButton class="button-font-size" icon="pi pi-refresh"
+                    title="Refrescar" style="margin-left: 5px"
+                    (click)="limpiarYConsultar()">
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [ngStyle]="{'width': col.width }">
+          <col style="width: 110px">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+          <th pResizableColumn>
+            Acciones
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+          <td class="text-truncate" title=" {{ rowData.nombre }}">
+            {{ rowData.nombre }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.correo }}">
+            {{ rowData.correo }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.fechaNacimiento }}">
+            {{ rowData.fechaNacimiento | date:'dd/MM/yyyy'}}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.celular }}">
+            {{ rowData.celular }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.fechaIngreso }}">
+            {{ rowData.fechaIngreso }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.ciudadCliente.nombre }}">
+            {{ rowData.ciudadCliente.nombre }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.ciudadCliente.departamento.nombre }}">
+            {{ rowData.ciudadCliente.departamento.nombre }}
+          </td>
+          <td class="text-truncate" title=" {{ rowData.ciudadCliente.departamento.pais.nombre }}">
+            {{ rowData.ciudadCliente.departamento.pais.nombre }}
+          </td>
+          <td class="text-truncate">
+            <div class="row">
+              <div class="icon-properties">
+                <i class="fas fa-edit fa-2x cursor-pointer"
+                   title="Editar cliente"
+                   (click)="editarCliente(rowData)"></i>
+              </div>
+              <div class="icon-properties">
+                <i class="fas fa-trash-alt fa-2x cursor-pointer"
+                   title="Eliminar cliente"
+                   (click)="confirmarEliminar($event, rowData)"></i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="9" class="text-center">
+            <span><strong>No hay datos para mostrar</strong></span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog appendTo="body" [header]="esNuevo ? 'Crear cliente' : 'Actualizar cliente'"
+          *ngIf="habilitarVentana" [(visible)]="habilitarVentana" [responsive]="true"
+          [modal]="true" [contentStyle]="{'max-height':'500px', 'overflow':'visible', 'width': '500px'}"
+          [transitionOptions]="'400ms'" [closable]="true">
+  <app-cliente-detalle #component [esNuevo]="esNuevo" [idAdmin]="idAdmin" [cliente]="clienteActualizar"
+                       (recargarDatos)="cerrarVentana($event)"></app-cliente-detalle>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button class="button-font-size" pButton (click)="component.crearCliente()"
+              label="{{esNuevo ? 'Crear' : 'Actualizar'}}"
+              [disabled]="component.form.invalid"></button>
+      <button class="button-font-size" pButton (click)="cerrarVentana()"
+              label="Cancelar"></button>
+    </div>
+  </p-footer>
+</p-dialog>
