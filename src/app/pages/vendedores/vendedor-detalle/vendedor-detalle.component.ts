@@ -9,14 +9,14 @@ import {UsuarioServiceService} from '../../../share/servicios-rest/usuario-servi
 import {ToastServiceService} from '../../../share/servicios/toast-service.service';
 
 @Component({
-  selector: 'app-cliente-detalle',
-  templateUrl: './cliente-detalle.component.html',
-  styleUrls: ['./cliente-detalle.component.css']
+  selector: 'app-vendedor-detalle',
+  templateUrl: './vendedor-detalle.component.html',
+  styleUrls: ['./vendedor-detalle.component.css']
 })
-export class ClienteDetalleComponent implements OnInit {
+export class VendedorDetalleComponent implements OnInit {
   @Input() esNuevo: boolean;
   @Input() idAdmin: number;
-  @Input() cliente: Usuario;
+  @Input() vendedor: Usuario;
   @Output() recargarDatos: EventEmitter<boolean> = new EventEmitter<boolean>();
   public form: FormGroup;
   public es = calendarEs;
@@ -46,11 +46,11 @@ export class ClienteDetalleComponent implements OnInit {
 
   private asignarInformacion() {
     this.form.setValue({
-      nombre: this.cliente.nombre,
-      correo: this.cliente.correo,
-      fechaNacimiento: this.cliente.fechaNacimiento ? new Date(this.cliente.fechaNacimiento) : null,
-      celular: this.cliente.celular,
-      ciudad: this.cliente.ciudadCliente,
+      nombre: this.vendedor.nombre,
+      correo: this.vendedor.correo,
+      fechaNacimiento: this.vendedor.fechaNacimiento ? new Date(this.vendedor.fechaNacimiento) : null,
+      celular: this.vendedor.celular,
+      ciudad: this.vendedor.ciudadVendedor,
     });
   }
 
@@ -62,18 +62,18 @@ export class ClienteDetalleComponent implements OnInit {
     });
   }
 
-  public crearCliente() {
+  public crearVendedor() {
     if (this.form.invalid) {
       return;
     }
-    this.cliente.tipo = 'CLIENTE';
-    this.cliente.fkAdministrador = this.idAdmin;
-    this.cliente.nombre = this.form.controls['nombre'].value;
-    this.cliente.correo = this.form.controls['correo'].value;
-    this.cliente.fechaNacimiento = this.form.controls['fechaNacimiento'].value ?
+    this.vendedor.tipo = 'VENDEDOR';
+    this.vendedor.fkAdministrador = this.idAdmin;
+    this.vendedor.nombre = this.form.controls['nombre'].value;
+    this.vendedor.correo = this.form.controls['correo'].value;
+    this.vendedor.fechaNacimiento = this.form.controls['fechaNacimiento'].value ?
       moment(this.form.controls['fechaNacimiento'].value).format('YYYY-MM-DD') : null;
-    this.cliente.celular = this.form.controls['celular'].value;
-    this.cliente.fkCiudadCliente = this.form.controls['ciudad'].value.id;
+    this.vendedor.celular = this.form.controls['celular'].value;
+    this.vendedor.fkCiudadVendedor = this.form.controls['ciudad'].value.id;
     if (this.esNuevo) {
       this.guardar();
     } else {
@@ -82,7 +82,7 @@ export class ClienteDetalleComponent implements OnInit {
   }
 
   public guardar() {
-    this.usuarioServiceService.guardarUsuario(this.cliente).subscribe(data => {
+    this.usuarioServiceService.guardarUsuario(this.vendedor).subscribe(data => {
       this.recargarDatos.emit(true);
       this.toastServiceService.addSingle('success', 'Respuesta', data.message);
     }, error => {
@@ -95,7 +95,7 @@ export class ClienteDetalleComponent implements OnInit {
   }
 
   public actualizar() {
-    this.usuarioServiceService.actualizarUsuario(this.cliente).subscribe(data => {
+    this.usuarioServiceService.actualizarUsuario(this.vendedor).subscribe(data => {
       this.recargarDatos.emit(true);
       this.toastServiceService.addSingle('success', 'Respuesta', data.message);
     }, error => {

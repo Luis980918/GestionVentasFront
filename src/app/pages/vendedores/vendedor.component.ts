@@ -6,22 +6,22 @@ import {LocalService} from '../../share/servicios/local-service.service';
 import {ToastServiceService} from '../../share/servicios/toast-service.service';
 
 @Component({
-  selector: 'app-clientes',
-  templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+  selector: 'app-vendedores',
+  templateUrl: './vendedor.component.html',
+  styleUrls: ['./vendedor.component.css']
 })
-export class ClientesComponent implements OnInit {
+export class VendedorComponent implements OnInit {
   public selectedColumns = [
     {field: 'nombre', header: 'Nombre', width: '150px'},
     {field: 'correo', header: 'Correo', width: '150px'},
     {field: 'fechaNacimiento', header: 'Fecha nacimiento', width: '150px'},
     {field: 'celular', header: 'Celular', width: '150px'},
     {field: 'fechaIngreso', header: 'Fecha ingreso', width: '150px'},
-    {field: 'ciudadCliente.nombre', header: 'Ciudad', width: '150px'},
-    {field: 'ciudadCliente.departamento.nombre', header: 'Departamento', width: '150px'},
-    {field: 'ciudadCliente.departamento.pais.nombre', header: 'Pais', width: '110px'},
+    {field: 'ciudadVendedor.nombre', header: 'Ciudad', width: '150px'},
+    {field: 'ciudadVendedor.departamento.nombre', header: 'Departamento', width: '150px'},
+    {field: 'ciudadVendedor.departamento.pais.nombre', header: 'Pais', width: '110px'},
   ];
-  public clientes: Usuario[] = [];
+  public vendedores: Usuario[] = [];
   public page = 0;
   public size = 20;
   public first = 1;
@@ -31,7 +31,7 @@ export class ClientesComponent implements OnInit {
   public idAdmin: number;
   public esNuevo = false;
   public habilitarVentana = false;
-  public clienteActualizar: Usuario = new Usuario();
+  public vendedorActualizar: Usuario = new Usuario();
   public nombre: string;
   public correo: string;
 
@@ -43,7 +43,7 @@ export class ClientesComponent implements OnInit {
   ngOnInit(): void {
     const user: Usuario = this.localService.getJsonValue('user_akatsuki');
     this.idAdmin = user.id;
-    this.consultarClientes();
+    this.consultarVendedores();
   }
 
   public loadRecordsLazy(event: LazyLoadEvent) {
@@ -61,37 +61,37 @@ export class ClientesComponent implements OnInit {
       this.esprimeraConsulta = true;
       return;
     }
-    this.consultarClientes();
+    this.consultarVendedores();
   }
 
-  public consultarClientes() {
+  public consultarVendedores() {
     this.usuarioServiceService.buscarUsuarioPorAdmin(this.idAdmin, this.nombre, this.correo,
       this.page, this.size, this.sort).subscribe(data => {
       if (data && data.body && data.body.content) {
         this.totalRecords = data.body.totalElements;
-        this.clientes = data.body.content;
+        this.vendedores = data.body.content;
       }
     });
   }
 
-  public crearCliente() {
+  public crearVededor() {
     this.esNuevo = true;
     this.habilitarVentana = true;
   }
 
   public cerrarVentana(recargar?: boolean) {
-    this.clienteActualizar = new Usuario();
+    this.vendedorActualizar = new Usuario();
     if (recargar) {
-      this.consultarClientes();
+      this.consultarVendedores();
     }
     this.habilitarVentana = false;
   }
 
-  private eliminarCliente(usuario: Usuario) {
+  private eliminarVendedor(usuario: Usuario) {
     this.usuarioServiceService.eliminarUsuario(usuario.id).subscribe(data => {
       if (data && data.status === 0) {
         this.toastServiceService.addSingle('success', 'Respuesta', data.message);
-        this.consultarClientes();
+        this.consultarVendedores();
       }
     }, error => {
       if (error.status === 0) {
@@ -102,8 +102,8 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  public editarCliente(usuario: Usuario) {
-    this.clienteActualizar = usuario;
+  public editarVendedor(usuario: Usuario) {
+    this.vendedorActualizar = usuario;
     this.esNuevo = false;
     this.habilitarVentana = true;
   }
@@ -115,16 +115,16 @@ export class ClientesComponent implements OnInit {
     this.totalRecords = 0;
     this.nombre = null;
     this.correo = null;
-    this.consultarClientes();
+    this.consultarVendedores();
   }
 
   public confirmarEliminar(event: Event, usuario: Usuario) {
     this.confirmationService.confirm({
       target: event.target,
-      message: 'Desea eliminar el cliente?',
+      message: 'Desea eliminar el vededor?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.eliminarCliente(usuario);
+        this.eliminarVendedor(usuario);
       }
     });
   }

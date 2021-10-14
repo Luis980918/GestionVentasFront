@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule,} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from '@angular/router';
 
@@ -10,7 +10,7 @@ import {AuthGuardService} from './share/servicios/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'clientes',
+    redirectTo: 'vendedores',
     pathMatch: 'full',
   }, {
     path: '',
@@ -33,7 +33,7 @@ const routes: Routes = [
     ]
   }, {
     path: '**',
-    redirectTo: 'clientes'
+    redirectTo: 'vendedores'
   }
 ];
 

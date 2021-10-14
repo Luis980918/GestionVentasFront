@@ -9,9 +9,9 @@ export class Usuario {
   tipo: string;
   nombre: string;
   fechaIngreso: Date;
-  fkCiudadCliente: number;
+  fkCiudadVendedor: number;
   fkAdministrador: number;
-  ciudadCliente: Ciudad;
+  ciudadVendedor: Ciudad;
   administrador: Usuario;
   nombreEmpresa: string;
   fkCiudadAdministrador: number;

@@ -4,7 +4,7 @@
 </div>
 <div class="container-fluid padding-container-fluid" style="margin-top: -20rem !important;">
   <div class="card-body align-items-end justify-content-end">
-    <p-table #tt [columns]="selectedColumns" [value]="clientes" [paginator]="true" [rows]="size" [lazy]="true"
+    <p-table #tt [columns]="selectedColumns" [value]="vendedores" [paginator]="true" [rows]="size" [lazy]="true"
              [rowsPerPageOptions]="[size,50,100]" (onLazyLoad)="loadRecordsLazy($event)" [scrollable]="true"
              [resizableColumns]="true" [loading]="false" [totalRecords]="totalRecords" [first]="first"
              [style]="{width:'100%'}">
@@ -14,7 +14,7 @@
             <label class="label-font-size">Nombre</label>
             <input class="p-inputtext-font-fize" type="text"
                    maxLength="150" [(ngModel)]="nombre"
-                   (keyup.enter)="consultarClientes()"
+                   (keyup.enter)="consultarVendedores()"
                    placeholder="Ingrese el nombre"
                    pInputText>
           </div>
@@ -22,13 +22,13 @@
             <label class="label-font-size">Correo</label>
             <input class="p-inputtext-font-fize" type="text"
                    maxLength="150" [(ngModel)]="correo"
-                   (keyup.enter)="consultarClientes()"
+                   (keyup.enter)="consultarVendedores()"
                    placeholder="Ingrese el correo"
                    pInputText>
           </div>
           <div class="p-col-3 align-items-end row margin-button">
             <button pButton class="button-font-size"
-                    label="Crear" (click)="crearCliente()">
+                    label="Crear" (click)="crearVededor()">
             </button>
             <button pButton class="button-font-size" icon="pi pi-refresh"
                     title="Refrescar" style="margin-left: 5px"
@@ -71,25 +71,25 @@
           <td class="text-truncate" title=" {{ rowData.fechaIngreso }}">
             {{ rowData.fechaIngreso }}
           </td>
-          <td class="text-truncate" title=" {{ rowData.ciudadCliente.nombre }}">
-            {{ rowData.ciudadCliente.nombre }}
+          <td class="text-truncate" title=" {{ rowData.ciudadVededor.nombre }}">
+            {{ rowData.ciudadVededor.nombre }}
           </td>
-          <td class="text-truncate" title=" {{ rowData.ciudadCliente.departamento.nombre }}">
-            {{ rowData.ciudadCliente.departamento.nombre }}
+          <td class="text-truncate" title=" {{ rowData.ciudadVededor.departamento.nombre }}">
+            {{ rowData.ciudadVededor.departamento.nombre }}
           </td>
-          <td class="text-truncate" title=" {{ rowData.ciudadCliente.departamento.pais.nombre }}">
-            {{ rowData.ciudadCliente.departamento.pais.nombre }}
+          <td class="text-truncate" title=" {{ rowData.ciudadVededor.departamento.pais.nombre }}">
+            {{ rowData.ciudadVededor.departamento.pais.nombre }}
           </td>
           <td class="text-truncate">
             <div class="row">
               <div class="icon-properties">
                 <i class="fas fa-edit fa-2x cursor-pointer"
-                   title="Editar cliente"
-                   (click)="editarCliente(rowData)"></i>
+                   title="Editar vededor"
+                   (click)="editarVendedor(rowData)"></i>
               </div>
               <div class="icon-properties">
                 <i class="fas fa-trash-alt fa-2x cursor-pointer"
-                   title="Eliminar cliente"
+                   title="Eliminar vededor"
                    (click)="confirmarEliminar($event, rowData)"></i>
               </div>
             </div>
@@ -107,15 +107,15 @@
   </div>
 </div>
 
-<p-dialog appendTo="body" [header]="esNuevo ? 'Crear cliente' : 'Actualizar cliente'"
+<p-dialog appendTo="body" [header]="esNuevo ? 'Crear vendedor' : 'Actualizar vendedor'"
           *ngIf="habilitarVentana" [(visible)]="habilitarVentana" [responsive]="true"
           [modal]="true" [contentStyle]="{'max-height':'500px', 'overflow':'visible', 'width': '500px'}"
           [transitionOptions]="'400ms'" [closable]="true">
-  <app-cliente-detalle #component [esNuevo]="esNuevo" [idAdmin]="idAdmin" [cliente]="clienteActualizar"
-                       (recargarDatos)="cerrarVentana($event)"></app-cliente-detalle>
+  <app-vendedor-detalle #component [esNuevo]="esNuevo" [idAdmin]="idAdmin" [vendedor]="vendedorActualizar"
+                        (recargarDatos)="cerrarVentana($event)"></app-vendedor-detalle>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button class="button-font-size" pButton (click)="component.crearCliente()"
+      <button class="button-font-size" pButton (click)="component.crearVendedor()"
               label="{{esNuevo ? 'Crear' : 'Actualizar'}}"
               [disabled]="component.form.invalid"></button>
       <button class="button-font-size" pButton (click)="cerrarVentana()"

@@ -12,10 +12,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-import { ClientesComponent } from './pages/clientes/clientes.component';
+import { VendedorComponent } from './pages/vendedores/vendedor.component';
 import {ShareModule} from './share/share.module';
 import {MessageService} from 'primeng/api';
-import { ClienteDetalleComponent } from './pages/clientes/cliente-detalle/cliente-detalle.component';
+import { VendedorDetalleComponent } from './pages/vendedores/vendedor-detalle/vendedor-detalle.component';
 import { CiudadesComponent } from './pages/ciudades/ciudades.component';
 import { DepartamentosComponent } from './pages/departamentos/departamentos.component';
 import { DepartamentoDetalleComponent } from './pages/departamentos/departamento-detalle/departamento-detalle.component';
@@ -40,8 +40,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    ClientesComponent,
-    ClienteDetalleComponent,
+    VendedorComponent,
+    VendedorDetalleComponent,
     CiudadesComponent,
     DepartamentosComponent,
     DepartamentoDetalleComponent,

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (!!this.localService.getJsonValue('user_akatsuki')) {
-      this.route.navigate(['/clientes']);
+      this.route.navigate(['/vendedores']);
     }
   }
 
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.usuarioServiceService.iniciarSesion(this.form.controls['correo'].value,
         this.form.controls['contrasena'].value).subscribe(data => {
         this.localService.setJsonValue('user_akatsuki', data.body);
-        this.route.navigate(['/clientes']);
+        this.route.navigate(['/vendedores']);
       }, error => {
         if (error.status === 0) {
           this.toastServiceService.addSingle('error', 'ERROR:', 'Los servicios no están disponibles');

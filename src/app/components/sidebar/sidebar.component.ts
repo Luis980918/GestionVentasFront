@@ -10,7 +10,7 @@ declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-  {path: '/clientes', title: 'Clientes', icon: 'fas fa-address-book', class: ''},
+  {path: '/vendedores', title: 'Vendedores', icon: 'fas fa-address-book', class: ''},
   {path: '/productos', title: 'Productos', icon: 'fas fa-leaf', class: ''},
   {path: '/departamentos', title: 'Departamentos', icon: 'fas fa-flag', class: ''},
   {path: '/ciudades', title: 'Ciudades', icon: 'fas fa-city', class: ''},
